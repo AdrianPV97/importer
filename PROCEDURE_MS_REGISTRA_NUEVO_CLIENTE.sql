@@ -4,6 +4,8 @@ declare variable cliente_id integer;
 declare variable cond_pago_id integer;
 declare variable validacion_nombre integer;
 declare variable validacion_rfc varchar(18);
+declare variable validacion_rol int;
+declare variable rol int;
 begin
 
 	:COND_PAGO_ID  = 866;
@@ -15,8 +17,21 @@ begin
 		SELECT RFC_CURP FROM DIRS_CLIENTES WHERE CLIENTE_ID = :VALIDACION_NOMBRE INTO validacion_rfc;
 		IF(validacion_rfc = :V_RFC) THEN --Si coincide el RFC
 		BEGIN
+			SELECT FIRST 1 ROL_CLAVE_CLI_ID FROM CLAVES_CLIENTES WHERE CLIENTE_ID = :V_NOMBRE ORDER BY ROL_CLAVE_CLI_ID DESC INTO :VALIDACION_ROL; 
+			
+			IF(:VALIDACION_ROL <> 3 ) THEN
+			BEGIN
+				:ROL = :VALIDACION_ROL + 1; 
+			END
+			ELSE
+			BEGIN
+				:ROL = 1226;
+			END
+			
+				
+	
 			INSERT INTO CLAVES_CLIENTES (CLAVE_CLIENTE_ID, CLAVE_CLIENTE, CLIENTE_ID, ROL_CLAVE_CLI_ID)
-    		VALUES (-1, :V_CLAVE_CLIENTE, :VALIDACION_NOMBRE, 2);
+    		VALUES (-1, :V_CLAVE_CLIENTE, :V_NOMBRE, :ROL);
 		END
 		
 		--Revisar si en este caso se modificara el nombre antes de insertarlo 
