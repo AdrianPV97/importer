@@ -31,7 +31,7 @@ begin
 				
 	
 			INSERT INTO CLAVES_CLIENTES (CLAVE_CLIENTE_ID, CLAVE_CLIENTE, CLIENTE_ID, ROL_CLAVE_CLI_ID)
-    		VALUES (-1, :V_CLAVE_CLIENTE, :V_NOMBRE, :ROL);
+    		VALUES (-1, :V_CLAVE_CLIENTE, :VALIDACION_NOMBRE, :ROL);
 		END
 		
 		--Revisar si en este caso se modificara el nombre antes de insertarlo 
